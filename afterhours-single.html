@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AFTERHOURS</title>
+    <meta name="description" content="AFTERHOURS. An old web store you should not have found.">
+    <style>
+/* ==========================================================================
+   AFTERHOURS // style.css
+   Old-web / Win98 windows on a dark, slightly haunted page.
+   ========================================================================== */
+
+:root {
+    --bg: #050805;
+    --win: #c0c0c0;
+    --hi: #ffffff;
+    --sh: #808080;
+    --dk: #404040;
+    --ink: #111111;
+    --title-a: #4a0000;
+    --title-b: #a01818;
+    --green: #33ff66;
+    --amber: #ffb000;
+    --red: #ff3030;
+    --font: "Courier New", Courier, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--ink);
+    background:
+        radial-gradient(ellipse at 50% 0%, #0f2a14 0%, transparent 60%),
+        repeating-linear-gradient(0deg, #070b07 0, #070b07 3px, #050805 3px, #050805 6px);
+    background-color: var(--bg);
+    min-height: 100vh;
+}
+
+/* CRT scanlines + vignette */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    background:
+        repeating-linear-gradient(0deg, rgba(0,0,0,.18) 0, rgba(0,0,0,.18) 1px, transparent 1px, transparent 3px),
+        radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55) 100%);
+}
+
+a { color: #000080; }
+a:hover { color: var(--title-b); }
+
+.page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 14px 12px 40px;
+}
+
+/* ---------- Windows ---------- */
+
+.window {
+    background: var(--win);
+    border: 2px solid;
+    border-color: var(--hi) var(--dk) var(--dk) var(--hi);
+    box-shadow: inset -1px -1px var(--sh), inset 1px 1px #dfdfdf, 6px 6px 0 rgba(0,0,0,.6);
+    margin-bottom: 18px;
+}
+
+.titlebar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 4px 3px 8px;
+    margin: 3px;
+    background: linear-gradient(90deg, var(--title-a), var(--title-b));
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: .5px;
+    user-select: none;
+}
+
+.titlebar .title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tb-btns { display: flex; gap: 3px; }
+
+.tb-btns i,
+.tb-close {
+    font-style: normal;
+    width: 20px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--win);
+    color: #000;
+    font-size: 12px;
+    line-height: 1;
+    border: 2px solid;
+    border-color: var(--hi) var(--dk) var(--dk) var(--hi);
+    padding: 0;
+    font-family: var(--font);
+    font-weight: bold;
+}
+
+.tb-close { cursor: pointer; }
+.tb-close:hover { background: var(--red); color: #fff; }
+
+.win-body { padding: 14px; }
+
+.statusbar {
+    margin: 0 3px 3px;
+    padding: 3px 8px;
+    border: 2px solid;
+    border-color: var(--sh) var(--hi) var(--hi) var(--sh);
+    font-size: 13px;
+    min-height: 26px;
+}
+
+.menubar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 0 6px 6px;
+}
+
+.menubar a {
+    color: var(--ink);
+    text-decoration: none;
+    padding: 3px 12px;
+    border: 2px solid transparent;
+    font-weight: bold;
+}
+
+.menubar a:hover {
+    border-color: var(--hi) var(--dk) var(--dk) var(--hi);
+    background: #d4d4d4;
+    color: var(--title-b);
+}
+
+/* ---------- Header ---------- */
+
+.header-body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    background: #000;
+    margin: 0 3px;
+    border: 2px solid;
+    border-color: var(--sh) var(--hi) var(--hi) var(--sh);
+}
+
+.logo {
+    margin: 0;
+    font-size: clamp(34px, 8vw, 64px);
+    letter-spacing: 6px;
+    color: var(--green);
+    text-shadow: 2px 0 var(--red), -2px 0 #00e5ff, 0 0 14px rgba(51,255,102,.6);
+    position: relative;
+    line-height: 1;
+}
+
+.logo.glitch { animation: glitch .35s steps(2) 1; }
+
+@keyframes glitch {
+    0%   { transform: translate(0,0); clip-path: inset(0 0 0 0); }
+    20%  { transform: translate(-4px,1px); clip-path: inset(10% 0 55% 0); }
+    40%  { transform: translate(5px,-1px); clip-path: inset(60% 0 5% 0); }
+    60%  { transform: translate(-2px,2px); clip-path: inset(30% 0 30% 0); }
+    100% { transform: translate(0,0); clip-path: inset(0 0 0 0); }
+}
+
+.tagline { margin: 8px 0 0; color: var(--green); font-size: 14px; letter-spacing: 2px; }
+
+.header-side { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+
+.counter {
+    color: var(--amber);
+    background: #120d00;
+    border: 2px solid;
+    border-color: var(--sh) var(--hi) var(--hi) var(--sh);
+    padding: 3px 10px;
+    font-size: 13px;
+}
+
+.blink { animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ---------- Marquee ---------- */
+
+.marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    background: #000;
+    color: var(--amber);
+    border: 2px solid;
+    border-color: var(--sh) var(--hi) var(--hi) var(--sh);
+    margin-bottom: 18px;
+    padding: 4px 0;
+    font-size: 13px;
+}
+
+.marquee-track { display: inline-flex; animation: scroll 38s linear infinite; }
+.marquee-track span { padding-right: 60px; }
+@keyframes scroll { to { transform: translateX(-50%); } }
+
+/* ---------- Buttons ---------- */
+
+.btn {
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--ink);
+    background: var(--win);
+    padding: 7px 14px;
+    border: 2px solid;
+    border-color: var(--hi) var(--dk) var(--dk) var(--hi);
+    box-shadow: inset -1px -1px var(--sh), inset 1px 1px #dfdfdf;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    transition: background .08s, color .08s;
+}
+
+.btn:hover { background: #000080; color: #fff; }
+.btn:active {
+    border-color: var(--dk) var(--hi) var(--hi) var(--dk);
+    box-shadow: inset 1px 1px var(--sh);
+    padding: 8px 13px 6px 15px;
+}
+.btn:focus-visible, .chip:focus-visible, input:focus-visible, textarea:focus-visible, .tb-close:focus-visible {
+    outline: 2px dotted #000;
+    outline-offset: 2px;
+}
+.btn.danger:hover { background: var(--red); }
+.btn.primary { background: #d8d8d8; }
+.btn[disabled], .btn.disabled {
+    color: var(--sh);
+    text-shadow: 1px 1px var(--hi);
+    cursor: not-allowed;
+    background: var(--win);
+}
+.btn[disabled]:hover { background: var(--win); color: var(--sh); }
+
+/* ---------- Toolbar ---------- */
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.search { display: flex; align-items: center; gap: 8px; font-weight: bold; flex: 1 1 260px; }
+
+input[type="search"], input[type="text"], input[type="number"], textarea {
+    font-family: var(--font);
+    font-size: 15px;
+    padding: 6px 8px;
+    background: #fff;
+    color: #000;
+    border: 2px solid;
+    border-color: var(--sh) var(--hi) var(--hi) var(--sh);
+    border-radius: 0;
+    width: 100%;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.chip {
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: bold;
+    padding: 4px 10px;
+    background: var(--win);
+    border: 2px solid;
+    border-color: var(--hi) var(--dk) var(--dk) var(--hi);
+    cursor: pointer;
+}
+.chip:hover { background: #d8d8d8; color: var(--title-b); }
+.chip[aria-pressed="true"] {
+    background: #000;
+    color: var(--green);
+    border-color: var(--dk) var(--hi) var(--hi) var(--dk);
+}
+
+.found { margin: 0 0 12px; font-size: 13px; color: #333; }
+
+/* ---------- Product grid ---------- */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 16px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background: var(--win);
+    border: 2px solid;
+    border-color: var(--hi) var(--dk) var(--dk) var(--hi);
+    box-shadow: inset -1px -1px var(--sh), 3px 3px 0 rgba(0,0,0,.35);
+    padding: 8px;
+    transition: transform .1s;
+}
+.card:hover { transform: translate(-2px, -2px); }
+
+.card .img {
+    background: #000;
+    border: 2px solid;
+    border-color: var(--sh) var(--hi) var(--hi) var(--sh);
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    position: relative;
+}
+.card .img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    image-rendering: pixelated;
+    filter: contrast(1.1) saturate(.8);
+}
+.card .img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,.25) 0, rgba(0,0,0,.25) 1px, transparent 1px, transparent 3px);
+    pointer-events: none;
+}
+.card:hover .img img { animation: jitter .25s steps(2) 2; }
+@keyframes jitter { 50% { transform: translate(2px, -1px); } }
+
+.card .cat { font-size: 12px; color: #444; margin: 8px 0 2px; letter-spacing: 1px; }
+.card h3 { margin: 0 0 6px; font-size: 16px; line-height: 1.2; }
+.card p { margin: 0 0 10px; font-size: 13px; flex: 1; }
+
+.card .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 10px; }
+.price { font-size: 18px; font-weight: bold; color: var(--title-a); }
+
+.tag {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 6px;
+    background: #000;
+    border: 1px solid #000;
+    white-space: nowrap;
+}
+.tag.ok { color: var(--green); }
+.tag.low { color: var(--amber); animation: blink 1.2s steps(1) infinite; }
+.tag.out { color: var(--red); }
+
+.empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 30px 10px;
+    background: #000;
+    color: var(--red);
+    border: 2px solid;
+    border-color: var(--sh) var(--hi) var(--hi) var(--sh);
+}
+
+/* ---------- About / footer ---------- */
+
+.about p, .footer-body p { margin: 0 0 10px; }
+.about ol { margin: 0 0 12px; padding-left: 22px; }
+.about .note { background: #fff8c0; border: 1px solid #8a7a00; padding: 8px; font-size: 14px; }
+.about .warn { color: var(--title-b); font-weight: bold; margin-bottom: 0; }
+.dim { color: #444; font-size: 13px; }
+
+/* ---------- Modals ---------- */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, .72);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 4vh 12px;
+    overflow-y: auto;
+    animation: fade .15s ease-out;
+}
+@keyframes fade { from { opacity: 0; } }
+
+.overlay .window {
+    width: 100%;
+    max-width: 540px;
+    margin: auto 0;
+    animation: pop .15s steps(3);
+}
+@keyframes pop { from { transform: scale(.94); } }
+
+.modal-body p { margin: 0 0 10px; }
+.modal-body .kv { background: #000; color: var(--green); padding: 8px 10px; border: 2px solid; border-color: var(--sh) var(--hi) var(--hi) var(--sh); margin-bottom: 12px; }
+.modal-body .kv div { overflow-wrap: anywhere; }
+.modal-body ul { margin: 0 0 12px; padding-left: 20px; }
+.modal-body .fields { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 12px; }
+.modal-body label { font-size: 13px; font-weight: bold; display: block; margin-bottom: 2px; }
+.modal-body textarea { resize: vertical; min-height: 140px; font-size: 13px; background: #f4f4f4; }
+.modal-body .alert { background: #ffe0e0; border: 1px solid var(--red); padding: 8px; font-size: 14px; margin-bottom: 12px; }
+.modal-body .small { font-size: 12px; color: #333; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.btn-row .btn { flex: 1 1 auto; }
+
+/* ---------- Toasts ---------- */
+
+#toasts {
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: min(340px, calc(100vw - 24px));
+}
+.toast {
+    background: var(--win);
+    border: 2px solid;
+    border-color: var(--hi) var(--dk) var(--dk) var(--hi);
+    box-shadow: 4px 4px 0 rgba(0,0,0,.6);
+    padding: 8px 10px;
+    font-size: 13px;
+    animation: pop .15s steps(3);
+}
+.toast b { color: var(--title-b); }
+
+/* ---------- Loader ---------- */
+
+#loader {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    background: #000;
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    transition: opacity .5s;
+    cursor: pointer;
+}
+#loader.hide { opacity: 0; pointer-events: none; }
+.loader-inner { width: 100%; max-width: 560px; }
+#boot-log { margin: 0 0 14px; font-family: var(--font); font-size: 14px; white-space: pre-wrap; min-height: 150px; }
+.progress { height: 18px; border: 2px solid var(--green); padding: 2px; }
+#bar { height: 100%; width: 0; background: var(--green); transition: width .25s steps(6); }
+.skip { font-size: 12px; opacity: .5; margin: 10px 0 0; }
+
+.noscript { background: var(--red); color: #fff; padding: 10px; text-align: center; position: relative; z-index: 6000; }
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 560px) {
+    body { font-size: 14px; }
+    .grid { grid-template-columns: 1fr; }
+    .header-side { align-items: flex-start; width: 100%; }
+    .search { flex-basis: 100%; }
+    .window { box-shadow: inset -1px -1px var(--sh), inset 1px 1px #dfdfdf, 3px 3px 0 rgba(0,0,0,.6); }
+    .btn-row .btn { flex-basis: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+</style>
+</head>
+<body>
+
+    <!-- Boot / loading screen -->
+    <div id="loader" role="status" aria-live="polite">
+        <div class="loader-inner">
+            <pre id="boot-log"></pre>
+            <div class="progress"><div id="bar"></div></div>
+            <p class="skip">click anywhere to skip</p>
+        </div>
+    </div>
+
+    <noscript>
+        <div class="noscript">JavaScript is required to open this archive.</div>
+    </noscript>
+
+    <div class="page">
+
+        <!-- Header -->
+        <header class="window" id="top">
+            <div class="titlebar">
+                <span class="title">C:\AFTERHOURS\INDEX.HTM</span>
+                <span class="tb-btns" aria-hidden="true"><i>_</i><i>&#9633;</i><i>x</i></span>
+            </div>
+            <div class="win-body header-body">
+                <div>
+                    <h1 class="logo" data-store-name data-text="AFTERHOURS">AFTERHOURS</h1>
+                    <p class="tagline"><span data-tagline>WE ARE STILL OPEN.</span> <span class="blink">_</span></p>
+                </div>
+                <div class="header-side">
+                    <div class="counter">VISITOR No. <b id="visitor">000000</b></div>
+                    <button class="btn danger" id="close-all" type="button">CLOSE ALL WINDOWS</button>
+                </div>
+            </div>
+            <nav class="menubar" aria-label="Main">
+                <a href="#catalog">CATALOG</a>
+                <a href="#about">ABOUT</a>
+                <a href="#contact">CONTACT</a>
+            </nav>
+        </header>
+
+        <!-- Marquee -->
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee-track">
+                <span>*** NOW OPEN 24 HOURS *** NO ACCOUNT REQUIRED *** DO NOT LOOK AT THE STATIC *** PAYMENT VIA DISCORD ONLY ***</span>
+                <span>*** NOW OPEN 24 HOURS *** NO ACCOUNT REQUIRED *** DO NOT LOOK AT THE STATIC *** PAYMENT VIA DISCORD ONLY ***</span>
+            </div>
+        </div>
+
+        <!-- Catalog -->
+        <main>
+            <section class="window" id="catalog" aria-labelledby="catalog-title">
+                <div class="titlebar">
+                    <span class="title" id="catalog-title">CATALOG.EXE</span>
+                    <span class="tb-btns" aria-hidden="true"><i>_</i><i>&#9633;</i><i>x</i></span>
+                </div>
+                <div class="win-body">
+                    <div class="toolbar">
+                        <label class="search">
+                            <span>SEARCH:</span>
+                            <input type="search" id="search" placeholder="type to search..." autocomplete="off">
+                        </label>
+                        <div class="chips" id="chips" role="group" aria-label="Categories"></div>
+                    </div>
+                    <p class="found" id="found" aria-live="polite"></p>
+                    <div class="grid" id="grid"></div>
+                </div>
+                <div class="statusbar"><span id="sysmsg">SYSTEM READY.</span></div>
+            </section>
+
+            <!-- About -->
+            <section class="window" id="about" aria-labelledby="about-title">
+                <div class="titlebar">
+                    <span class="title" id="about-title">ABOUT.TXT</span>
+                    <span class="tb-btns" aria-hidden="true"><i>_</i><i>&#9633;</i><i>x</i></span>
+                </div>
+                <div class="win-body about">
+                    <p>This store was found, not built. It sells small things. Tapes, disks, paper. Some of them are ordinary.</p>
+                    <p><b>HOW TO ORDER</b></p>
+                    <ol>
+                        <li>Press <b>BUY</b> on any item.</li>
+                        <li>Copy the generated order message.</li>
+                        <li>Send it to the administrator on Discord.</li>
+                        <li>Agree on payment and delivery there.</li>
+                    </ol>
+                    <p class="note">No accounts. No passwords. Pressing BUY does not place or pay for an order. <span data-instruction></span></p>
+                    <p class="warn"><span class="blink">!</span> If the lights flicker while you shop, that is normal.</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="window" id="contact">
+            <div class="titlebar">
+                <span class="title">CONTACT.LOG</span>
+                <span class="tb-btns" aria-hidden="true"><i>_</i><i>&#9633;</i><i>x</i></span>
+            </div>
+            <div class="win-body footer-body">
+                <p>Contact: <b data-discord-name>YOUR_DISCORD_USERNAME</b> (Discord)</p>
+                <p class="dim">Best viewed in any browser, at any hour. Last updated: never. Connection stable: probably.</p>
+                <p class="dim">&copy; <span data-store-name>AFTERHOURS</span> // all signals reserved // <a href="#top">back to top</a></p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal root and toasts -->
+    <div id="modal-root"></div>
+    <div id="toasts" aria-live="polite"></div>
+
+    <script>
+/* ==========================================================================
+   AFTERHOURS // config.js
+   Основные настройки магазина. Меняй только значения справа от двоеточий.
+   ========================================================================== */
+
+const STORE_CONFIG = {
+    // Название магазина (показывается в заголовке, окнах и тексте заказа)
+    storeName: "AFTERHOURS",
+
+    // Короткий слоган под логотипом
+    tagline: "WE ARE STILL OPEN.",
+
+    // Твой Discord-ник (показывается покупателю в окне заказа)
+    discordName: "YOUR_DISCORD_USERNAME",
+
+    // Ссылка на твой Discord-профиль. Формат: https://discord.com/users/ТВОЙ_ID
+    // ID: Discord -> Настройки -> Расширенные -> включить "Режим разработчика",
+    // затем ПКМ по своему профилю -> "Копировать ID пользователя".
+    // Пока здесь значение-заглушка (YOUR_DISCORD_ID), кнопка OPEN DISCORD скрыта,
+    // а покупатель видит инструкцию, как найти тебя по нику.
+    discordUrl: "https://discord.com/users/711266865741168651",
+
+    // Валюта для отображения цен (просто текст)
+    currency: "USD",
+
+    // Текст инструкции в окне заказа и в разделе "О магазине"
+    purchaseInstruction: "Contact the administrator to complete your order."
+};
+
+</script>
+    <script>
+/* ==========================================================================
+   AFTERHOURS // products.js
+   КАТАЛОГ ТОВАРОВ. Это единственный файл, который нужно править, чтобы
+   менять ассортимент.
+
+   КАК РЕДАКТИРОВАТЬ
+   -----------------
+   Каждый товар - это блок { ... } внутри массива PRODUCTS. Блоки разделены запятой.
+
+   ДОБАВИТЬ товар:   скопируй любой блок целиком, вставь после него (не забудь запятую)
+                     и поменяй значения. id должен быть уникальным.
+   УДАЛИТЬ товар:    удали блок целиком (от { до }, вместе с запятой после него).
+   ИЗМЕНИТЬ:         правь значения в кавычках / числа.
+
+   ПОЛЯ
+   ----
+   id          - уникальный короткий код латиницей, без пробелов ("tape-04").
+   name        - название.
+   category    - категория. Фильтры в каталоге создаются автоматически из этих значений.
+   price       - цена ЧИСЛОМ, без кавычек и валюты (12 или 7.5). Валюта задаётся в config.js.
+   stock       - статус наличия, ровно одно из:
+                   "in_stock" - в наличии
+                   "low"      - заканчивается
+                   "out"      - нет в наличии (кнопка BUY станет неактивной)
+   image       - путь к картинке относительно index.html, например "images/tape.jpg".
+                 Положи файл в папку images/. Если оставить "" (пустую строку) или
+                 файл не найдётся, сайт нарисует пиксельную заглушку автоматически.
+   description - описание (обычный текст).
+   ========================================================================== */
+
+const PRODUCTS = [
+    {
+        id: "tape-04",
+        name: "VHS: TEST BROADCAST 04",
+        category: "MEDIA",
+        price: 18,
+        stock: "in_stock",
+        image: "",
+        description: "Unlabeled tape. 47 minutes of a test pattern. Around minute 31 it stops being a test pattern."
+    },
+    {
+        id: "floppy-x5",
+        name: "Floppy Disk Set (x5)",
+        category: "HARDWARE",
+        price: 12,
+        stock: "low",
+        image: "",
+        description: "Five 3.5\" disks, hand-labeled. Do not open the file called READ_ME_LATER."
+    },
+    {
+        id: "cassette-dial",
+        name: "Cassette: DIAL-UP LULLABY",
+        category: "MEDIA",
+        price: 9.5,
+        stock: "in_stock",
+        image: "",
+        description: "Modem handshake recordings from a number that no longer exists. Best played at night."
+    },
+    {
+        id: "zine-no-reply",
+        name: "Photocopy Zine: DO NOT REPLY",
+        category: "PRINT",
+        price: 6,
+        stock: "in_stock",
+        image: "",
+        description: "A5, 32 pages, grainy black and white. Chain letters, forum posts and a few pages we cannot explain."
+    },
+    {
+        id: "badge-night",
+        name: "Night Shift Badge",
+        category: "MERCH",
+        price: 8,
+        stock: "in_stock",
+        image: "",
+        description: "Laminated employee badge. The photo is blank. The name field is blank. Somehow it still fits you."
+    },
+    {
+        id: "poster-static",
+        name: "Poster: CRT STATIC 24x36",
+        category: "PRINT",
+        price: 15,
+        stock: "low",
+        image: "",
+        description: "Printed noise on matte paper. Looks different depending on the hour you look at it."
+    },
+    {
+        id: "stickers-lost",
+        name: "Sticker Pack: LOST CHANNELS",
+        category: "MERCH",
+        price: 4,
+        stock: "in_stock",
+        image: "",
+        description: "Ten vinyl stickers of channel numbers that do not exist."
+    },
+    {
+        id: "parcel-000",
+        name: "Parcel #000",
+        category: "UNKNOWN",
+        price: 25,
+        stock: "out",
+        image: "",
+        description: "Contents unknown. Sealed. Previously sold to 3 customers. None of them asked for a refund."
+    }
+];
+
+</script>
+    <script>
+/* ==========================================================================
+   AFTERHOURS // app.js
+   Логика сайта: каталог, поиск, фильтры, окно заказа, уведомления.
+   Данные берутся из config.js и products.js. Обычно этот файл трогать не нужно.
+   ========================================================================== */
+
+(function () {
+    'use strict';
+
+    var cfg = typeof STORE_CONFIG !== 'undefined' ? STORE_CONFIG : {};
+    var products = typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS) ? PRODUCTS : [];
+
+    var STORE = cfg.storeName || 'AFTERHOURS';
+    var CURRENCY = cfg.currency || 'USD';
+    var STATUS = {
+        in_stock: { label: 'IN STOCK', cls: 'ok' },
+        low: { label: 'LOW STOCK', cls: 'low' },
+        out: { label: 'SOLD OUT', cls: 'out' }
+    };
+
+    var state = { query: '', category: 'ALL' };
+    var openModals = [];
+
+    /* ---------- helpers ---------- */
+
+    function $(sel, root) { return (root || document).querySelector(sel); }
+
+    // Безопасное создание элементов: весь текст идёт через textContent / text nodes.
+    function el(tag, props) {
+        var node = document.createElement(tag);
+        var i;
+        if (props) {
+            Object.keys(props).forEach(function (k) {
+                var v = props[k];
+                if (v === false || v === null || v === undefined) return;
+                if (k === 'class') node.className = v;
+                else if (k === 'text') node.textContent = v;
+                else if (k.indexOf('on') === 0) node.addEventListener(k.slice(2), v);
+                else node.setAttribute(k, v === true ? '' : v);
+            });
+        }
+        for (i = 2; i < arguments.length; i++) {
+            appendKid(node, arguments[i]);
+        }
+        return node;
+    }
+
+    function appendKid(node, kid) {
+        if (kid === null || kid === undefined || kid === false) return;
+        if (Array.isArray(kid)) { kid.forEach(function (k) { appendKid(node, k); }); return; }
+        node.appendChild(kid.nodeType ? kid : document.createTextNode(String(kid)));
+    }
+
+    function store(key, val) {
+        try {
+            if (val === undefined) return localStorage.getItem(key);
+            localStorage.setItem(key, val);
+        } catch (e) { /* localStorage может быть недоступен */ }
+        return null;
+    }
+
+    function money(n) {
+        var v = Math.round(Number(n) * 100) / 100;
+        return v + ' ' + CURRENCY;
+    }
+
+    function discordReady() {
+        var u = String(cfg.discordUrl || '').trim();
+        return /^https?:\/\//i.test(u) && !/YOUR_DISCORD/i.test(u);
+    }
+
+    /* ---------- generated pixel placeholder ---------- */
+
+    function hash(str) {
+        var h = 2166136261, i;
+        for (i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+        return h >>> 0;
+    }
+
+    function rng(seed) {
+        return function () {
+            seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+            return seed / 4294967296;
+        };
+    }
+
+    function placeholder(p) {
+        var r = rng(hash(String(p.id) + String(p.name)));
+        var colors = ['#33ff66', '#ffb000', '#ff3030', '#33e5ff', '#d070ff'];
+        var color = colors[Math.floor(r() * colors.length)];
+        var n = 8, cell = 12, x, y, rects = '';
+        for (y = 0; y < n; y++) {
+            for (x = 0; x < n / 2; x++) {
+                if (r() > 0.5) {
+                    rects += '<rect x="' + x * cell + '" y="' + y * cell + '" width="' + cell + '" height="' + cell + '"/>';
+                    rects += '<rect x="' + (n - 1 - x) * cell + '" y="' + y * cell + '" width="' + cell + '" height="' + cell + '"/>';
+                }
+            }
+        }
+        var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" shape-rendering="crispEdges">' +
+            '<rect width="96" height="96" fill="#070b07"/><g fill="' + color + '">' + rects + '</g></svg>';
+        return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    }
+
+    /* ---------- toasts ---------- */
+
+    function toast(title, text) {
+        var box = $('#toasts');
+        if (!box) return;
+        var t = el('div', { class: 'toast', role: 'status' }, el('b', { text: title }), text ? ' ' + text : '');
+        box.appendChild(t);
+        setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); }, 3800);
+    }
+
+    /* ---------- modals ---------- */
+
+    function openModal(title, bodyNode, onClose) {
+        var overlay, win, closeBtn, entry;
+
+        function close() {
+            var idx = openModals.indexOf(entry);
+            if (idx === -1) return;
+            openModals.splice(idx, 1);
+            if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+            if (!openModals.length) document.body.style.overflow = '';
+            if (onClose) onClose();
+        }
+
+        closeBtn = el('button', { class: 'tb-close', type: 'button', 'aria-label': 'Close', onclick: close, text: 'x' });
+        win = el('div', { class: 'window', role: 'dialog', 'aria-modal': 'true', 'aria-label': title },
+            el('div', { class: 'titlebar' }, el('span', { class: 'title', text: title }), closeBtn),
+            el('div', { class: 'win-body modal-body' }, bodyNode)
+        );
+        overlay = el('div', { class: 'overlay' }, win);
+        overlay.addEventListener('mousedown', function (e) { if (e.target === overlay) close(); });
+
+        entry = { close: close };
+        openModals.push(entry);
+        document.body.style.overflow = 'hidden';
+        $('#modal-root').appendChild(overlay);
+
+        var firstBtn = overlay.querySelector('.btn, input');
+        if (firstBtn) firstBtn.focus({ preventScroll: true });
+        return entry;
+    }
+
+    function closeAllWindows() {
+        var had = openModals.length;
+        openModals.slice().forEach(function (m) { m.close(); });
+        var t = $('#toasts');
+        if (t) t.textContent = '';
+        toast('SYSTEM', had ? 'All windows closed.' : 'Nothing to close.');
+    }
+
+    /* ---------- clipboard ---------- */
+
+    function copyText(text) {
+        function fallback() {
+            var ta = el('textarea', { readonly: true, style: 'position:fixed;top:-1000px;opacity:0' });
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            var ok = false;
+            try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+            document.body.removeChild(ta);
+            return ok;
+        }
+        if (navigator.clipboard && window.isSecureContext) {
+            return navigator.clipboard.writeText(text).then(function () { return true; }, function () { return fallback(); });
+        }
+        return Promise.resolve(fallback());
+    }
+
+    /* ---------- order window ---------- */
+
+    function openOrder(p) {
+        var qty = 1, user = '', note = '';
+
+        var msgBox = el('textarea', { rows: '8', readonly: true, 'aria-label': 'Order message' });
+
+        function buildMessage() {
+            return [
+                'ORDER REQUEST // ' + STORE,
+                'Product: ' + p.name + ' (ID: ' + p.id + ')',
+                'Quantity: ' + qty,
+                'Price per item: ' + money(p.price),
+                'Total: ' + money(p.price * qty),
+                'My Discord username: ' + (user || '(write here)'),
+                'Additional info: ' + (note || '-')
+            ].join('\n');
+        }
+
+        function refresh() { msgBox.value = buildMessage(); }
+
+        var qtyInput = el('input', {
+            type: 'number', min: '1', max: '99', value: '1', id: 'f-qty',
+            oninput: function (e) {
+                var n = parseInt(e.target.value, 10);
+                qty = isFinite(n) && n > 0 ? Math.min(n, 99) : 1;
+                refresh();
+            }
+        });
+        var userInput = el('input', {
+            type: 'text', id: 'f-user', placeholder: 'e.g. name#0000 or username', autocomplete: 'off',
+            oninput: function (e) { user = e.target.value.trim(); refresh(); }
+        });
+        var noteInput = el('input', {
+            type: 'text', id: 'f-note', placeholder: 'optional', autocomplete: 'off',
+            oninput: function (e) { note = e.target.value.trim(); refresh(); }
+        });
+
+        function doCopy() {
+            return copyText(buildMessage()).then(function (ok) {
+                if (ok) toast('COPIED', 'Order message is in your clipboard.');
+                else { msgBox.focus(); msgBox.select(); toast('COPY FAILED', 'Select the text and copy it manually.'); }
+                return ok;
+            });
+        }
+
+        var buttons = [];
+        var notice = null;
+
+        if (discordReady()) {
+            buttons.push(el('button', {
+                class: 'btn primary', type: 'button', text: '[ OPEN DISCORD ]',
+                onclick: function () {
+                    doCopy();
+                    window.open(String(cfg.discordUrl).trim(), '_blank', 'noopener');
+                }
+            }));
+        } else {
+            notice = el('div', { class: 'alert' },
+                el('b', { text: 'DISCORD LINK NOT CONFIGURED. ' }),
+                'Copy the message below and send it to ',
+                el('b', { text: cfg.discordName && !/YOUR_DISCORD/i.test(cfg.discordName) ? cfg.discordName : 'the administrator' }),
+                ' on Discord (search by username).'
+            );
+        }
+        buttons.push(el('button', { class: 'btn', type: 'button', text: '[ COPY ORDER MESSAGE ]', onclick: doCopy }));
+
+        var modalRef;
+        buttons.push(el('button', { class: 'btn danger', type: 'button', text: '[ CLOSE ]', onclick: function () { modalRef.close(); } }));
+
+        var nameShown = cfg.discordName || 'YOUR_DISCORD_USERNAME';
+
+        var body = el('div', null,
+            el('p', { text: 'You have selected:' }),
+            el('div', { class: 'kv' },
+                el('div', { text: 'PRODUCT: ' + p.name }),
+                el('div', { text: 'PRICE: ' + money(p.price) })
+            ),
+            el('p', { text: cfg.purchaseInstruction || 'Contact the administrator to complete your order.' }),
+            el('p', null, 'Administrator on Discord: ', el('b', { text: nameShown })),
+            el('p', { text: 'Send the following information:' }),
+            el('ul', null,
+                el('li', { text: 'Product name.' }),
+                el('li', { text: 'Quantity.' }),
+                el('li', { text: 'Your Discord username.' }),
+                el('li', { text: 'Any additional information about your order.' })
+            ),
+            el('div', { class: 'fields' },
+                el('div', null, el('label', { for: 'f-qty', text: 'QUANTITY' }), qtyInput),
+                el('div', null, el('label', { for: 'f-user', text: 'YOUR DISCORD USERNAME' }), userInput),
+                el('div', null, el('label', { for: 'f-note', text: 'ADDITIONAL INFO' }), noteInput)
+            ),
+            notice,
+            el('label', { for: '', text: 'ORDER MESSAGE (auto-generated)' }),
+            msgBox,
+            el('p', { class: 'small', text: 'Pressing BUY does not place or pay for an order. Contact the seller and agree on the details yourself.' }),
+            el('div', { class: 'btn-row' }, buttons)
+        );
+
+        refresh();
+        modalRef = openModal('ORDER REQUEST // ' + STORE, body);
+    }
+
+    /* ---------- first visit warning ---------- */
+
+    function showWarning() {
+        var ref;
+        var body = el('div', null,
+            el('p', null, el('b', { text: 'WARNING' })),
+            el('p', { text: 'You have reached an archived storefront. Its operator has not been seen for some time.' }),
+            el('p', { text: 'Orders are handled manually through Discord. No account is needed. Do not reply to anything that replies first.' }),
+            el('div', { class: 'btn-row' },
+                el('button', { class: 'btn primary', type: 'button', text: '[ ENTER ]', onclick: function () { ref.close(); } })
+            )
+        );
+        ref = openModal('WARNING.EXE', body, function () { store('afterhours_seen', '1'); });
+    }
+
+    /* ---------- catalog ---------- */
+
+    function categories() {
+        var seen = {}, list = [];
+        products.forEach(function (p) {
+            var c = String(p.category || 'OTHER').toUpperCase();
+            if (!seen[c]) { seen[c] = true; list.push(c); }
+        });
+        return list;
+    }
+
+    function renderChips() {
+        var box = $('#chips');
+        box.textContent = '';
+        ['ALL'].concat(categories()).forEach(function (c) {
+            box.appendChild(el('button', {
+                class: 'chip', type: 'button', text: c,
+                'aria-pressed': String(state.category === c),
+                onclick: function () { state.category = c; renderChips(); renderGrid(); }
+            }));
+        });
+    }
+
+    function matches(p) {
+        var cat = String(p.category || 'OTHER').toUpperCase();
+        if (state.category !== 'ALL' && cat !== state.category) return false;
+        if (!state.query) return true;
+        var hay = (p.name + ' ' + (p.description || '') + ' ' + cat).toLowerCase();
+        return hay.indexOf(state.query) !== -1;
+    }
+
+    function card(p) {
+        var st = STATUS[p.stock] || STATUS.in_stock;
+        var soldOut = p.stock === 'out';
+        var fallback = placeholder(p);
+
+        var img = el('img', { src: p.image ? p.image : fallback, alt: p.name, loading: 'lazy' });
+        img.addEventListener('error', function () {
+            if (img.src !== fallback) img.src = fallback;
+        });
+
+        var btn = soldOut
+            ? el('button', { class: 'btn', type: 'button', disabled: true, text: 'SOLD OUT' })
+            : el('button', { class: 'btn primary', type: 'button', text: 'BUY', onclick: function () { openOrder(p); } });
+
+        return el('article', { class: 'card' },
+            el('div', { class: 'img' }, img),
+            el('div', { class: 'cat', text: '// ' + String(p.category || 'OTHER').toUpperCase() }),
+            el('h3', { text: p.name }),
+            el('p', { text: p.description || '' }),
+            el('div', { class: 'row' },
+                el('span', { class: 'price', text: money(p.price) }),
+                el('span', { class: 'tag ' + st.cls, text: st.label })
+            ),
+            btn
+        );
+    }
+
+    function renderGrid() {
+        var grid = $('#grid');
+        var list = products.filter(matches);
+        grid.textContent = '';
+        if (!list.length) {
+            grid.appendChild(el('div', { class: 'empty', text: 'NO RECORDS FOUND.' }));
+        } else {
+            list.forEach(function (p) { grid.appendChild(card(p)); });
+        }
+        $('#found').textContent = list.length + ' ITEM(S) FOUND';
+    }
+
+    /* ---------- atmosphere ---------- */
+
+    var SYS_MESSAGES = [
+        'SYSTEM READY.',
+        'CONNECTION STABLE.',
+        'SIGNAL LOST... SIGNAL RESTORED.',
+        'SOMEONE ELSE IS BROWSING THIS PAGE.',
+        'LAST BACKUP: UNKNOWN.',
+        'DO NOT ADJUST YOUR SCREEN.',
+        'ADMINISTRATOR LAST SEEN: 03:07 AM.',
+        'WARNING: TIME ZONE MISMATCH.',
+        'CACHE CLEARED. YOU WERE ALREADY HERE.'
+    ];
+
+    function startTicker() {
+        var node = $('#sysmsg');
+        var logo = $('.logo');
+        var i = 0;
+        setInterval(function () {
+            i = (i + 1) % SYS_MESSAGES.length;
+            if (node) node.textContent = SYS_MESSAGES[i];
+            if (logo && Math.random() < 0.5) {
+                logo.classList.remove('glitch');
+                void logo.offsetWidth;
+                logo.classList.add('glitch');
+            }
+        }, 5000);
+    }
+
+    function visitorCounter() {
+        var node = $('#visitor');
+        if (!node) return;
+        var n = parseInt(store('afterhours_visitor'), 10);
+        if (!isFinite(n)) { n = 300 + Math.floor(Math.random() * 400); store('afterhours_visitor', String(n)); }
+        node.textContent = String(n).padStart(6, '0');
+    }
+
+    function fillConfigText() {
+        document.title = STORE;
+        document.querySelectorAll('[data-store-name]').forEach(function (n) {
+            n.textContent = STORE;
+            if (n.hasAttribute('data-text')) n.setAttribute('data-text', STORE);
+        });
+        document.querySelectorAll('[data-tagline]').forEach(function (n) { if (cfg.tagline) n.textContent = cfg.tagline; });
+        document.querySelectorAll('[data-discord-name]').forEach(function (n) { n.textContent = cfg.discordName || 'YOUR_DISCORD_USERNAME'; });
+        document.querySelectorAll('[data-instruction]').forEach(function (n) { n.textContent = cfg.purchaseInstruction || ''; });
+    }
+
+    /* ---------- boot ---------- */
+
+    function boot(done) {
+        var loader = $('#loader');
+        var log = $('#boot-log');
+        var bar = $('#bar');
+        var lines = [
+            'AFTERHOURS BIOS v0.97',
+            'checking memory............ OK',
+            'dialing 555-0134........... CONNECT 28800',
+            'loading catalog............ OK',
+            'looking for operator....... NOT FOUND',
+            'starting anyway.'
+        ];
+        var i = 0, finished = false;
+
+        function finish() {
+            if (finished) return;
+            finished = true;
+            bar.style.width = '100%';
+            loader.classList.add('hide');
+            setTimeout(function () { if (loader.parentNode) loader.parentNode.removeChild(loader); }, 600);
+            done();
+        }
+
+        loader.addEventListener('click', finish);
+
+        (function next() {
+            if (finished) return;
+            if (i < lines.length) {
+                log.textContent += lines[i++] + '\n';
+                bar.style.width = Math.round((i / lines.length) * 100) + '%';
+                setTimeout(next, 280);
+            } else {
+                setTimeout(finish, 450);
+            }
+        })();
+    }
+
+    /* ---------- init ---------- */
+
+    function init() {
+        fillConfigText();
+        visitorCounter();
+        renderChips();
+        renderGrid();
+        startTicker();
+
+        $('#search').addEventListener('input', function (e) {
+            state.query = e.target.value.trim().toLowerCase();
+            renderGrid();
+        });
+        $('#close-all').addEventListener('click', closeAllWindows);
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && openModals.length) {
+                openModals[openModals.length - 1].close();
+            }
+        });
+
+        boot(function () {
+            if (!store('afterhours_seen')) showWarning();
+        });
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+})();
+
+</script>
+</body>
+</html>
