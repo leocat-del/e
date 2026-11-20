@@ -29,10 +29,6 @@
       inset 3px 3px 0 var(--bevel-light),
       inset -3px -3px 0 var(--bevel-dark);
 
-    /* Клетчатая текстура блоков для каталога и текстовых блоков */
-    --checker:
-      conic-gradient(#1f1f1f 25%, #262626 0 50%, #1f1f1f 0 75%, #262626 0) 0 0 / 32px 32px;
-
     --font-title: "Press Start 2P", "Courier New", monospace;
     --font-body: "VT323", "Courier New", monospace;
   }
@@ -82,12 +78,7 @@
   }
 
   /* ---------- Верхняя панель ---------- */
-  .topbar {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 26px 24px 10px;
-  }
+  .topbar { display: flex; align-items: center; gap: 16px; padding: 26px 24px 10px; }
   .topbar .line {
     flex: 1;
     height: 6px;
@@ -140,7 +131,7 @@
   section.block {
     padding: 28px 22px 36px;
     margin: 0 18px 22px;
-    background: var(--checker);
+    background: #000;
     box-shadow: var(--pixel-frame);
   }
   .section-title {
@@ -382,7 +373,7 @@
 <div class="side right"><img id="rightImg" alt=""></div>
 
 <div class="welcome" id="welcome">
-  Добро пожаловать в AFTERHOURS! Выбери предмет и нажми BUY.
+  Добро пожаловать в AFTERHOURS! Выбери предмет и нажми Купить.
   <button id="welcomeClose" aria-label="Закрыть">×</button>
 </div>
 
@@ -426,7 +417,7 @@
     <h2 class="section-title">ABOUT</h2>
     <div class="panel">
       <p>Жирный Дороф нравиться всем и медведям тоже</p>
-      <p>Вещи здесь ограничены по количеству и исчезают с полки без предупреждения.Ведь Медведям они тоже нужны</p>
+      <p>Вещи здесь ограничены по количеству и исчезают с полки без предупреждения. Ведь Медведям они тоже нужны</p>
     </div>
   </section>
 
@@ -458,7 +449,7 @@
 
 <script>
 /* =====================================================================
-   ИЗОБРАЖЕНИЯ — меняй только ссылки здесь
+   ИЗОБРАЖЕНИЯ САЙТА — меняй только ссылки здесь
    ===================================================================== */
 const SITE_IMAGES = {
     left: "images/left-background.png",
@@ -472,88 +463,68 @@ const SITE_IMAGES = {
 const SELLER_NAME = "продавец";
 
 /* Цены и количество по умолчанию для каждого тира.
-   Замените на свои значения в самих товарах при необходимости. */
+   Цену или остаток отдельного товара можно поменять в поле price / stock ниже. */
 const TIERS = {
-  base:  { label: "Базовые",  price: "150 ₽",   stock: 10 },
-  mid:   { label: "Средние",  price: "450 ₽",   stock: 5 },
-  rare:  { label: "Редкие",   price: "1 200 ₽", stock: 2 },
-  elite: { label: "Незерит",  price: "4 500 ₽", stock: 1 }
+  easy:   { label: "Базовые", price: "150 ₽",   stock: 10 },
+  medium: { label: "Средние", price: "450 ₽",   stock: 5 },
+  hard:   { label: "Редкие",  price: "1 200 ₽", stock: 2 },
+  elite:  { label: "Незерит", price: "4 500 ₽", stock: 1 }
 };
 
 /* =====================================================================
    ТОВАРЫ
-   Формат: [название, описание, тир, slug картинки]
-   Картинка ищется по пути images/products/<slug>.png
+   image — прямая ссылка на файл картинки (.png, .jpg, .webp).
+   Пока ссылок нет, на карточке показывается буква названия.
    ===================================================================== */
 const RAW_PRODUCTS = [
-  // Базовый тир
-  ["Незерак", "Есть повсюду, ломается мгновенно.", "base", "netherrack"],
-  ["Песок душ", "Легко копается лопатой в Долине песка душ.", "base", "soul_sand"],
-  ["Почва душ", "Легко копается лопатой в Долине песка душ.", "base", "soul_soil"],
-  ["Базальт", "Много в Базальтовых дельтах и колоннах.", "base", "basalt"],
-  ["Чернит", "Легко добывается киркой в пустошах и дельтах.", "base", "blackstone"],
-  ["Гравий", "Большими залежами у лавовых морей.", "base", "gravel"],
-  ["Магмовый блок", "Легко найти вдоль берегов лавы.", "base", "magma_block"],
-  ["Костяной блок", "Крупные скелеты в Долине песка душ.", "base", "bone_block"],
-  ["Багровый стебель", "Обычная рубка деревьев в Багровом лесу.", "base", "crimson_stem"],
-  ["Искажённый стебель", "Обычная рубка в безопасном Искажённом лесу.", "base", "warped_stem"],
-  ["Очищенный багровый стебель", "Делается в один клик топором.", "base", "stripped_crimson_stem"],
-  ["Очищенный искажённый стебель", "Делается в один клик топором.", "base", "stripped_warped_stem"],
-  ["Блок нароста Нижнего мира", "Быстро собирается мотыгой с грибков.", "base", "nether_wart_block"],
-  ["Искажённый блок нароста", "Быстро собирается мотыгой с грибков.", "base", "warped_wart_block"],
-  ["Грибосвет", "Растёт внутри грибков, ломается чем угодно.", "base", "shroomlight"],
-  ["Багровый грибок", "Собирается рукой, легко размножается.", "base", "crimson_fungus"],
-  ["Искажённый грибок", "Собирается рукой, легко размножается.", "base", "warped_fungus"],
-  ["Багровые корни", "Собираются рукой или ножницами в лесу.", "base", "crimson_roots"],
-  ["Искажённые корни", "Собираются рукой или ножницами в лесу.", "base", "warped_roots"],
-
-  // Средний тир
-  ["Незерские ростки", "Добываются только ножницами.", "mid", "nether_sprouts"],
-  ["Плакучие лианы", "Без ножниц выпадают с шансом 33%.", "mid", "weeping_vines"],
-  ["Извилистые лианы", "Без ножниц выпадают с шансом 33%.", "mid", "twisting_vines"],
-  ["Обсидиан", "Нужна алмазная или незеритовая кирка.", "mid", "obsidian"],
-  ["Плачущий обсидиан", "Нужна алмазная кирка, встречается реже.", "mid", "crying_obsidian"],
-  ["Нарост Нижнего мира", "Нужно найти Адскую крепость или бастион.", "mid", "nether_wart"],
-  ["Незерские кирпичи", "Адская крепость и бой с ифритами.", "mid", "nether_bricks"],
-  ["Потрескавшиеся незерские кирпичи", "Добываются только в Адских крепостях.", "mid", "cracked_nether_bricks"],
-  ["Резные незерские кирпичи", "Генерируются в крепостях в ограниченном количестве.", "mid", "chiseled_nether_bricks"],
-
-  // Редкий тир
-  ["Светокамень", "Без Шелкового касания рассыпается на пыль.", "rare", "glowstone"],
-  ["Багровый нилий", "Без Шелкового касания становится незераком.", "rare", "crimson_nylium"],
-  ["Искажённый нилий", "Без Шелкового касания становится незераком.", "rare", "warped_nylium"],
-  ["Полированный чернит", "Добывается только в Развалинах бастиона.", "rare", "polished_blackstone"],
-  ["Полированные чернитовые кирпичи", "Добываются только в Развалинах бастиона.", "rare", "polished_blackstone_bricks"],
-  ["Потрескавшиеся полированные чернитовые кирпичи", "Редкий декор в бастионах.", "rare", "cracked_polished_blackstone_bricks"],
-  ["Резной полированный чернит", "Редкий декор в бастионах.", "rare", "chiseled_polished_blackstone"],
-  ["Гладкий базальт", "В Аду генерируется только в бастионах.", "rare", "smooth_basalt"],
-  ["Полированный базальт", "В Аду генерируется только в бастионах.", "rare", "polished_basalt"],
-  ["Цепь", "Генерируется в бастионах над пропастями.", "rare", "chain"],
-  ["Блок золота", "Спрятан в сокровищницах бастионов.", "rare", "gold_block"],
-  ["Золочёный чернит", "Есть только в бастионах.", "rare", "gilded_blackstone"],
-  ["Фонарь душ", "Редко генерируется в бастионах.", "rare", "soul_lantern"],
-  ["Костёр душ", "Крайне редкий. Нужно Шелковое касание.", "rare", "soul_campfire"],
-  ["Сухой гаст", "Очень редкая находка у останков в Долине песка душ.", "rare", "dried_ghast"],
-
-  // Незеритовый тир
-  ["Незеритовый меч", "Максимальный урон, не сгорает в лаве.", "elite", "netherite_sword"],
-  ["Незеритовая кирка", "Самая быстрая и прочная кирка в игре.", "elite", "netherite_pickaxe"],
-  ["Незеритовый топор", "Высокий урон и мгновенная рубка дерева.", "elite", "netherite_axe"],
-  ["Незеритовая лопата", "Самая быстрая копка сыпучих блоков.", "elite", "netherite_shovel"],
-  ["Незеритовая мотыга", "Максимальная прочность для сбора листвы и наростов.", "elite", "netherite_hoe"],
-  ["Незеритовое копьё", "Штука для шашлыка", "elite", "netherite_spear"]
+  { name: "Netherrack", id: "minecraft:netherrack", tier: "easy", image: "https://minecraft.wiki" },
+  { name: "Soul Sand", id: "minecraft:soul_sand", tier: "easy", image: "https://minecraft.wiki" },
+  { name: "Soul Soil", id: "minecraft:soul_soil", tier: "easy", image: "https://minecraft.wiki" },
+  { name: "Basalt", id: "minecraft:basalt", tier: "easy", image: "https://minecraft.wiki" },
+  { name: "Blackstone", id: "minecraft:blackstone", tier: "easy", image: "https://minecraft.wiki" },
+  { name: "Crimson Stem", id: "minecraft:crimson_stem", tier: "easy", image: "https://minecraft.wiki" },
+  { name: "Warped Stem", id: "minecraft:warped_stem", tier: "easy", image: "https://minecraft.wiki" },
+  { name: "Nether Wart Block", id: "minecraft:nether_wart_block", tier: "easy", image: "https://minecraft.wiki" },
+  { name: "Warped Wart Block", id: "minecraft:warped_wart_block", tier: "easy", image: "https://minecraft.wiki" },
+  { name: "Crimson Fungus", id: "minecraft:crimson_fungus", tier: "easy", image: "https://minecraft.wiki" },
+  { name: "Warped Fungus", id: "minecraft:warped_fungus", tier: "easy", image: "https://minecraft.wiki" },
+  { name: "Crimson Roots", id: "minecraft:crimson_roots", tier: "easy", image: "https://minecraft.wiki" },
+  { name: "Warped Roots", id: "minecraft:warped_roots", tier: "easy", image: "https://minecraft.wiki" },
+  { name: "Nether Sprouts", id: "minecraft:nether_sprouts", tier: "medium", image: "https://minecraft.wiki" },
+  { name: "Weeping Vines", id: "minecraft:weeping_vines", tier: "medium", image: "https://minecraft.wiki" },
+  { name: "Twisting Vines", id: "minecraft:twisting_vines", tier: "medium", image: "https://minecraft.wiki" },
+  { name: "Nether Wart", id: "minecraft:nether_wart", tier: "medium", image: "https://minecraft.wiki" },
+  { name: "Chiseled Nether Bricks", id: "minecraft:chiseled_nether_bricks", tier: "medium", image: "https://minecraft.wiki" },
+  { name: "Glowstone", id: "minecraft:glowstone", tier: "hard", image: "https://minecraft.wiki" },
+  { name: "Crimson Nylium", id: "minecraft:crimson_nylium", tier: "hard", image: "https://minecraft.wiki" },
+  { name: "Warped Nylium", id: "minecraft:warped_nylium", tier: "hard", image: "https://minecraft.wiki" },
+  { name: "Polished Blackstone", id: "minecraft:polished_blackstone", tier: "hard", image: "https://minecraft.wiki" },
+  { name: "Chiseled Polished Blackstone", id: "minecraft:chiseled_polished_blackstone", tier: "hard", image: "https://minecraft.wiki" },
+  { name: "Polished Basalt", id: "minecraft:polished_basalt", tier: "hard", image: "https://minecraft.wiki" },
+  { name: "Gilded Blackstone", id: "minecraft:gilded_blackstone", tier: "hard", image: "https://minecraft.wiki" },
+  { name: "Soul Lantern", id: "minecraft:soul_lantern", tier: "hard", image: "https://minecraft.wiki" },
+  { name: "Dried Ghast", id: "minecraft:dried_ghast", tier: "hard", image: "https://minecraft.wiki" },
+  { name: "Netherite Sword", id: "minecraft:netherite_sword", tier: "elite", image: "https://minecraft.wiki" },
+  { name: "Netherite Pickaxe", id: "minecraft:netherite_pickaxe", tier: "elite", image: "https://minecraft.wiki" },
+  { name: "Netherite Axe", id: "minecraft:netherite_axe", tier: "elite", image: "https://minecraft.wiki" },
+  { name: "Netherite Shovel", id: "minecraft:netherite_shovel", tier: "elite", image: "https://minecraft.wiki" },
+  { name: "Netherite Hoe", id: "minecraft:netherite_hoe", tier: "elite", image: "https://minecraft.wiki" },
+  { name: "Netherite Spear", id: "minecraft:netherite_spear", tier: "elite", image: "https://minecraft.wiki" }
 ];
 
-/* Превращаем список в товары с ценами, остатком и путём к картинке */
-const PRODUCTS = RAW_PRODUCTS.map(([name, description, tier, slug], i) => ({
-  id: i + 1,
-  name,
-  description,
-  category: TIERS[tier].label,
-  price: TIERS[tier].price,
-  stock: TIERS[tier].stock,
-  image: `images/products/${slug}.png`
-}));
+/* Превращаем список в товары */
+const PRODUCTS = RAW_PRODUCTS.map((raw, i) => {
+  const tier = TIERS[raw.tier];
+  return {
+    id: i + 1,
+    name: raw.name,
+    description: "",
+    category: tier.label,
+    price: tier.price,
+    stock: tier.stock,
+    image: raw.image || ""
+  };
+});
 
 /* =====================================================================
    СОСТОЯНИЕ
@@ -570,6 +541,10 @@ function esc(str) {
   const d = document.createElement("div");
   d.textContent = String(str ?? "");
   return d.innerHTML;
+}
+
+function isImageUrl(url) {
+  return /^https?:\/\/.+\.(png|jpe?g|webp|gif)(\?.*)?$/i.test(url || "");
 }
 
 function toast(text, isError = false) {
@@ -609,21 +584,25 @@ async function copyText(text) {
 
 /* =====================================================================
    КАРТОЧКИ ТОВАРОВ
-   Если картинки нет, остаётся буква названия
+   Картинка показывается только если это прямая ссылка на файл.
+   Иначе остаётся буква названия.
    ===================================================================== */
 function buildCard(p) {
   const inStock = p.stock > 0;
   const letter = esc(p.name.charAt(0));
+  const imgTag = isImageUrl(p.image)
+    ? `<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onerror="this.remove()">`
+    : "";
 
   return `
     <article class="card">
       <div class="img">
         <span class="ph">${letter}</span>
-        <img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onerror="this.remove()">
+        ${imgTag}
       </div>
       <div class="body">
         <div class="name">${esc(p.name)}</div>
-        <div class="desc">${esc(p.description)}</div>
+        ${p.description ? `<div class="desc">${esc(p.description)}</div>` : ""}
         <div class="meta">
           <span class="price">${esc(p.price)}</span>
           <span class="status ${inStock ? "in" : ""}">${inStock ? `В наличии: ${p.stock}` : "SOLD OUT"}</span>
@@ -647,9 +626,7 @@ function applyFilters() {
   const q = currentSearch.trim().toLowerCase();
   const filtered = PRODUCTS.filter(p => {
     const matchCat = currentFilter === "Все" || p.category === currentFilter;
-    const matchText = !q ||
-      p.name.toLowerCase().includes(q) ||
-      p.description.toLowerCase().includes(q);
+    const matchText = !q || p.name.toLowerCase().includes(q);
     return matchCat && matchText;
   });
   renderProducts(filtered);
@@ -663,7 +640,7 @@ function renderFilters() {
 }
 
 /* =====================================================================
-   КНОПКА BUY → копирование текста заказа и открытие чата
+   КНОПКА КУПИТЬ → копирование текста заказа и открытие чата
    ===================================================================== */
 async function buy(id) {
   const p = PRODUCTS.find(x => x.id === id);
@@ -683,7 +660,7 @@ async function buy(id) {
 }
 
 /* =====================================================================
-   ИЗОБРАЖЕНИЯ
+   ИЗОБРАЖЕНИЯ САЙТА
    ===================================================================== */
 function setupImage(imgEl, src, onFail) {
   if (!src) { onFail && onFail(); return; }
@@ -710,7 +687,7 @@ function initVisitors() {
   let count = parseInt(localStorage.getItem("afterhours_visits") || "0", 10);
   count += 1;
   localStorage.setItem("afterhours_visits", String(count));
-  $("#visitors").textContent = `Заплутащий${count}`;
+  $("#visitors").textContent = `Заплутащий ${count}`;
 }
 
 function initFirstVisit() {
