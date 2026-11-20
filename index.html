@@ -21,7 +21,6 @@
     --muted: #9a9a9a;
     --grass: #5b8a2e;
     --grass-light: #7fb24a;
-    --dirt: #6b4a2b;
     --gold: #f5c542;
     --red: #b33a3a;
 
@@ -212,11 +211,10 @@
     box-shadow: var(--pixel-frame);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    transition: none;
   }
   .filter-btn:hover { background: #4a4a4a; }
   .filter-btn.active { background: var(--grass); color: #fff; }
-  .filter-btn:active, .btn:active { transform: translateY(2px); }
+  .btn:active, .filter-btn:active { transform: translateY(2px); }
 
   .count {
     text-align: center;
@@ -349,17 +347,13 @@
     margin: 0 auto;
     text-align: center;
   }
-  .contact-box a {
-    display: inline-block;
-    font-family: var(--font-title);
-    font-size: 11px;
+  .contact-box .btn {
+    background: var(--grass);
     color: #fff;
-    background: #5865f2;
-    text-decoration: none;
+    font-size: 11px;
     padding: 14px 16px;
-    box-shadow: var(--pixel-frame);
   }
-  .contact-box a:hover { background: #7289da; }
+  .contact-box .btn:hover { background: var(--grass-light); }
 
   footer {
     margin-top: auto;
@@ -373,86 +367,6 @@
     background: var(--stone-dark);
   }
   .visitors { margin-top: 8px; font-family: var(--font-body); font-size: 20px; color: var(--grass-light); }
-
-  /* ---------- Модальное окно BUY ---------- */
-  .overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.75);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    z-index: 100;
-  }
-  .overlay.open { display: flex; }
-  .modal {
-    background: var(--stone);
-    box-shadow: 0 0 0 4px #000, inset 4px 4px 0 var(--bevel-light), inset -4px -4px 0 var(--bevel-dark);
-    width: min(480px, 100%);
-    max-height: 92vh;
-    overflow-y: auto;
-    padding: 26px 24px 22px;
-    position: relative;
-  }
-  .modal h3 {
-    font-family: var(--font-title);
-    font-weight: 400;
-    font-size: 14px;
-    color: var(--gold);
-    text-shadow: 2px 2px 0 #000;
-    margin-bottom: 12px;
-    line-height: 1.5;
-  }
-  .modal .product-name { font-size: 24px; color: #fff; margin-bottom: 18px; }
-  .close-x {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 34px;
-    height: 34px;
-    background: var(--red);
-    color: #fff;
-    border: none;
-    font-family: var(--font-title);
-    font-size: 12px;
-    cursor: pointer;
-    box-shadow: 0 0 0 2px #000;
-  }
-  .close-x:hover { background: #d44d4d; }
-
-  .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
-  .field label { font-size: 20px; color: var(--muted); }
-  .field input, .field select, .field textarea {
-    background: #0d0d0d;
-    border: none;
-    color: var(--text);
-    padding: 8px 10px;
-    font-family: var(--font-body);
-    font-size: 22px;
-    outline: none;
-    width: 100%;
-    box-shadow: inset 3px 3px 0 #000, inset -3px -3px 0 var(--bevel-light);
-  }
-  .field input:focus, .field select:focus, .field textarea:focus { box-shadow: inset 3px 3px 0 #000, inset -3px -3px 0 var(--grass-light); }
-  .field textarea { min-height: 80px; resize: vertical; }
-
-  .message-preview {
-    background: #0d0d0d;
-    padding: 12px;
-    font-size: 20px;
-    color: #cfcfcf;
-    white-space: pre-wrap;
-    min-height: 60px;
-    margin-bottom: 16px;
-    box-shadow: inset 2px 2px 0 #000, inset -2px -2px 0 #3a3a3a;
-  }
-  .row-btns { display: flex; gap: 10px; }
-  .row-btns .btn { flex: 1; }
-  .btn.ghost { background: #555; }
-  .btn.ghost:hover { background: #666; }
-  .btn.go { background: #5865f2; }
-  .btn.go:hover { background: #7289da; }
 
   /* ---------- Уведомления ---------- */
   .toasts {
@@ -585,9 +499,8 @@
     <h2 class="section-title">КАК КУПИТЬ</h2>
     <ol class="steps">
       <li>Выбери предмет и нажми BUY.</li>
-      <li>Укажи количество и свой Discord username.</li>
-      <li>При необходимости добавь комментарий.</li>
-      <li>Скопируй сообщение и отправь его продавцу в Discord.</li>
+      <li>Откроется чат, а текст заказа скопируется автоматически.</li>
+      <li>Вставь текст в чат и отправь его.</li>
     </ol>
   </section>
 
@@ -595,7 +508,7 @@
   <section class="block" id="contact">
     <h2 class="section-title">CONTACT</h2>
     <div class="contact-box">
-      <a id="discordLink" href="#" target="_blank" rel="noopener">Открыть Discord</a>
+      <button class="btn" id="contactBtn">Написать нам</button>
     </div>
   </section>
 
@@ -605,42 +518,11 @@
   </footer>
 </div>
 
-<!-- ============ ОКНО BUY ============ -->
-<div class="overlay" id="buyOverlay" role="dialog" aria-modal="true" aria-labelledby="buyTitle">
-  <div class="modal">
-    <button class="close-x" id="buyClose" aria-label="Закрыть">X</button>
-    <h3 id="buyTitle">ОФОРМЛЕНИЕ ЗАКАЗА</h3>
-    <div class="product-name" id="buyProductName"></div>
-
-    <div class="field">
-      <label for="qtySelect">Количество</label>
-      <select id="qtySelect"></select>
-    </div>
-    <div class="field">
-      <label for="discordUser">Discord username</label>
-      <input type="text" id="discordUser" placeholder="username">
-    </div>
-    <div class="field">
-      <label for="extraInfo">Дополнительная информация</label>
-      <textarea id="extraInfo" placeholder="размер, пожелания..."></textarea>
-    </div>
-    <div class="field">
-      <label>Сообщение продавцу</label>
-      <div class="message-preview" id="messagePreview">Заполни поля — здесь появится текст заказа.</div>
-    </div>
-
-    <div class="row-btns">
-      <button class="btn ghost" id="copyBtn">Копировать</button>
-      <button class="btn go" id="goDiscordBtn">В Discord</button>
-    </div>
-  </div>
-</div>
-
 <div class="toasts" id="toasts"></div>
 
 <script>
 /* =====================================================================
-   НАСТРОЙКИ ИЗОБРАЖЕНИЙ — меняй только ссылки здесь
+   ИЗОБРАЖЕНИЯ — меняй только ссылки здесь
    ===================================================================== */
 const SITE_IMAGES = {
     left: "images/left-background.png",
@@ -651,9 +533,7 @@ const SITE_IMAGES = {
 /* =====================================================================
    НАСТРОЙКИ МАГАЗИНА
    ===================================================================== */
-const DISCORD_URL = "https://discord.gg/your-invite";
 const SELLER_NAME = "продавец";
-const MAX_QTY = 10;
 
 /* =====================================================================
    ТОВАРЫ — ЗАМЕНИ НА СВОИ
@@ -673,7 +553,6 @@ const PRODUCTS = [
    ===================================================================== */
 let currentFilter = "Все";
 let currentSearch = "";
-let activeProduct = null;
 
 /* =====================================================================
    УТИЛИТЫ
@@ -692,6 +571,33 @@ function toast(text, isError = false) {
   el.textContent = text;
   $("#toasts").appendChild(el);
   setTimeout(() => el.remove(), 3000);
+}
+
+/* =====================================================================
+   TAWK.TO — открытие чата
+   ===================================================================== */
+function openChat() {
+  if (window.Tawk_API && typeof Tawk_API.maximize === "function") {
+    Tawk_API.maximize();
+  } else {
+    toast("Чат загружается, попробуй через секунду", true);
+  }
+}
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch {}
+    ta.remove();
+    return ok;
+  }
 }
 
 /* =====================================================================
@@ -747,78 +653,27 @@ function renderFilters() {
 }
 
 /* =====================================================================
-   ОКНО BUY
+   КНОПКА BUY → копирование текста заказа и открытие чата
    ===================================================================== */
-function openBuy(id) {
+async function buy(id) {
   const p = PRODUCTS.find(x => x.id === id);
   if (!p || p.stock <= 0) return;
-  activeProduct = p;
 
-  $("#buyProductName").textContent = `${p.name} — ${p.price}`;
+  const text =
+    `Здравствуйте, ${SELLER_NAME}!\n` +
+    `Хочу заказать: ${p.name} (${p.price})`;
 
-  const max = Math.min(p.stock, MAX_QTY);
-  let opts = "";
-  for (let i = 1; i <= max; i++) opts += `<option value="${i}">${i}</option>`;
-  $("#qtySelect").innerHTML = opts;
-
-  $("#extraInfo").value = "";
-  updateMessage();
-
-  $("#buyOverlay").classList.add("open");
-  setTimeout(() => $("#discordUser").focus(), 50);
-}
-
-function closeBuy() {
-  $("#buyOverlay").classList.remove("open");
-  activeProduct = null;
-}
-
-function buildMessage() {
-  if (!activeProduct) return "";
-  const qty = $("#qtySelect").value || 1;
-  const user = $("#discordUser").value.trim() || "—";
-  const extra = $("#extraInfo").value.trim();
-
-  let msg = `Здравствуйте, ${SELLER_NAME}!\n`;
-  msg += `Хочу заказать: ${activeProduct.name} × ${qty} (${activeProduct.price})\n`;
-  msg += `Discord: ${user}\n`;
-  if (extra) msg += `Комментарий: ${extra}\n`;
-  return msg.trim();
-}
-
-function updateMessage() {
-  $("#messagePreview").textContent = activeProduct
-    ? buildMessage()
-    : "Заполни поля — здесь появится текст заказа.";
-}
-
-async function copyMessage() {
-  const text = buildMessage();
-  if (!text) return;
-  try {
-    await navigator.clipboard.writeText(text);
-    toast("Сообщение скопировано");
-  } catch {
-    const ta = document.createElement("textarea");
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    try {
-      document.execCommand("copy");
-      toast("Сообщение скопировано");
-    } catch {
-      toast("Не удалось скопировать", true);
-    }
-    ta.remove();
+  const copied = await copyText(text);
+  if (copied) {
+    toast("Текст заказа скопирован, вставь его в чат");
+  } else {
+    toast("Не удалось скопировать, напиши товар в чат вручную", true);
   }
-}
-
-function goDiscord() {
-  window.open(DISCORD_URL, "_blank", "noopener");
+  openChat();
 }
 
 /* =====================================================================
-   ИЗОБРАЖЕНИЯ: подключение и запасные варианты
+   ИЗОБРАЖЕНИЯ
    ===================================================================== */
 function setupImage(imgEl, src, onFail) {
   if (!src) { onFail && onFail(); return; }
@@ -840,7 +695,6 @@ function initImages() {
 
 /* =====================================================================
    ПОСЕТИТЕЛИ И ПЕРВОЕ ПОСЕЩЕНИЕ
-   (счётчик локальный, в браузере; общий счётчик требует сервера)
    ===================================================================== */
 function initVisitors() {
   let count = parseInt(localStorage.getItem("afterhours_visits") || "0", 10);
@@ -862,7 +716,6 @@ function initFirstVisit() {
    ===================================================================== */
 function init() {
   initImages();
-  $("#discordLink").href = DISCORD_URL;
 
   renderFilters();
   applyFilters();
@@ -882,24 +735,10 @@ function init() {
 
   $("#catalogGrid").addEventListener("click", e => {
     const btn = e.target.closest("[data-buy]");
-    if (btn && !btn.disabled) openBuy(parseInt(btn.dataset.buy, 10));
+    if (btn && !btn.disabled) buy(parseInt(btn.dataset.buy, 10));
   });
 
-  $("#buyClose").addEventListener("click", closeBuy);
-  $("#buyOverlay").addEventListener("click", e => {
-    if (e.target.id === "buyOverlay") closeBuy();
-  });
-  document.addEventListener("keydown", e => {
-    if (e.key === "Escape") closeBuy();
-  });
-
-  ["#qtySelect", "#discordUser", "#extraInfo"].forEach(sel =>
-    $(sel).addEventListener("input", updateMessage)
-  );
-  $("#qtySelect").addEventListener("change", updateMessage);
-
-  $("#copyBtn").addEventListener("click", copyMessage);
-  $("#goDiscordBtn").addEventListener("click", goDiscord);
+  $("#contactBtn").addEventListener("click", openChat);
   $("#welcomeClose").addEventListener("click", () => $("#welcome").classList.remove("show"));
 
   initVisitors();
