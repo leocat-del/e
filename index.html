@@ -643,9 +643,9 @@
    НАСТРОЙКИ ИЗОБРАЖЕНИЙ — меняй только ссылки здесь
    ===================================================================== */
 const SITE_IMAGES = {
-    left: "https://fromgate.com/wp-content/uploads/2016/04/minecraft-1-10-new-block.jpg",
+    left: "images/left-background.png",
     right: "images/right-background.png",
-    topIcon: "https://ru.minecraft.wiki/images/thumb/%D0%9D%D0%B5%D0%B7%D0%B5%D1%80%D0%B8%D1%82%D0%BE%D0%B2%D1%8B%D0%B9_%D0%B1%D0%BB%D0%BE%D0%BA.png/160px-%D0%9D%D0%B5%D0%B7%D0%B5%D1%80%D0%B8%D1%82%D0%BE%D0%B2%D1%8B%D0%B9_%D0%B1%D0%BB%D0%BE%D0%BA.png?4a8f4"
+    topIcon: "images/top-icon.png"
 };
 
 /* =====================================================================
@@ -833,7 +833,6 @@ function initImages() {
   setupImage($("#topIcon"), SITE_IMAGES.topIcon, () => {
     $("#topFallback").style.display = "";
   });
-  // Если иконка загрузилась, скрываем символ-заглушку
   $("#topIcon").addEventListener("load", () => {
     $("#topFallback").style.display = "none";
   });
@@ -909,5 +908,20 @@ function init() {
 
 document.addEventListener("DOMContentLoaded", init);
 </script>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6b0063968e6f59d4de497d02/1k7soa1q6';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
 </body>
 </html>
