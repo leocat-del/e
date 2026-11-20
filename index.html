@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AFTERHOURS</title>
+<title>Жирный Дороф</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
@@ -399,8 +399,8 @@
   </header>
 
   <div class="hero">
-    <h1>AFTERHOURS</h1>
-    <p class="slogan">— магазин в ночном мире —</p>
+    <h1>Жирный Дороф</h1>
+    <p class="slogan">Всегда жирный</p>
   </div>
 
   <nav class="menu">
@@ -425,8 +425,8 @@
   <section class="block" id="about">
     <h2 class="section-title">ABOUT</h2>
     <div class="panel">
-      <p>AFTERHOURS — небольшой магазин внутри ночного мира.</p>
-      <p>Вещи здесь ограничены по количеству и исчезают с полки без предупреждения.</p>
+      <p>Жирный Дороф нравиться всем и медведям тоже</p>
+      <p>Вещи здесь ограничены по количеству и исчезают с полки без предупреждения.Ведь Медведям они тоже нужны</p>
     </div>
   </section>
 
@@ -434,7 +434,7 @@
   <section class="block" id="how">
     <h2 class="section-title">КАК КУПИТЬ</h2>
     <ol class="steps">
-      <li>Выбери предмет и нажми BUY.</li>
+      <li>Выбери предмет и нажми Купить.</li>
       <li>Откроется чат, а текст заказа скопируется автоматически.</li>
       <li>Вставь текст в чат и отправь его.</li>
     </ol>
@@ -449,7 +449,7 @@
   </section>
 
   <footer>
-    AFTERHOURS
+    Жирный Дороф
     <div class="visitors" id="visitors"></div>
   </footer>
 </div>
@@ -541,7 +541,7 @@ const RAW_PRODUCTS = [
   ["Незеритовый топор", "Высокий урон и мгновенная рубка дерева.", "elite", "netherite_axe"],
   ["Незеритовая лопата", "Самая быстрая копка сыпучих блоков.", "elite", "netherite_shovel"],
   ["Незеритовая мотыга", "Максимальная прочность для сбора листвы и наростов.", "elite", "netherite_hoe"],
-  ["Незеритовое копьё", "Актуально для версий 1.21.11+.", "elite", "netherite_spear"]
+  ["Незеритовое копьё", "Штука для шашлыка", "elite", "netherite_spear"]
 ];
 
 /* Превращаем список в товары с ценами, остатком и путём к картинке */
@@ -629,7 +629,7 @@ function buildCard(p) {
           <span class="status ${inStock ? "in" : ""}">${inStock ? `В наличии: ${p.stock}` : "SOLD OUT"}</span>
         </div>
         <button class="btn" data-buy="${p.id}" ${inStock ? "" : "disabled"}>
-          ${inStock ? "BUY" : "SOLD OUT"}
+          ${inStock ? "Купить" : "SOLD OUT"}
         </button>
       </div>
     </article>`;
@@ -710,7 +710,7 @@ function initVisitors() {
   let count = parseInt(localStorage.getItem("afterhours_visits") || "0", 10);
   count += 1;
   localStorage.setItem("afterhours_visits", String(count));
-  $("#visitors").textContent = `Посетитель № ${count}`;
+  $("#visitors").textContent = `Заплутащий${count}`;
 }
 
 function initFirstVisit() {
