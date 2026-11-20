@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 <style>
   :root {
-    --center-width: min(1000px, 100vw);
+    --center-width: min(1080px, 100vw);
     --side-width: calc((100vw - var(--center-width)) / 2);
 
     --stone-dark: #1c1c1c;
@@ -28,6 +28,10 @@
       0 0 0 3px #000,
       inset 3px 3px 0 var(--bevel-light),
       inset -3px -3px 0 var(--bevel-dark);
+
+    /* Клетчатая текстура блоков для каталога и текстовых блоков */
+    --checker:
+      conic-gradient(#1f1f1f 25%, #262626 0 50%, #1f1f1f 0 75%, #262626 0) 0 0 / 32px 32px;
 
     --font-title: "Press Start 2P", "Courier New", monospace;
     --font-body: "VT323", "Courier New", monospace;
@@ -61,13 +65,7 @@
   }
   .side.left { left: 0; }
   .side.right { right: 0; }
-  .side img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-  }
+  .side img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
   .side img[hidden] { display: none; }
 
   /* ---------- Центральный блок ---------- */
@@ -79,10 +77,7 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    background:
-      repeating-linear-gradient(0deg, rgba(0,0,0,.18) 0 4px, transparent 4px 8px),
-      repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0 4px, transparent 4px 8px),
-      var(--stone);
+    background: var(--stone);
     box-shadow: 0 0 0 4px #000, 0 0 60px rgba(0,0,0,.9);
   }
 
@@ -96,8 +91,7 @@
   .topbar .line {
     flex: 1;
     height: 6px;
-    background:
-      repeating-linear-gradient(90deg, var(--bevel-dark) 0 6px, var(--stone-light) 6px 12px);
+    background: repeating-linear-gradient(90deg, var(--bevel-dark) 0 6px, var(--stone-light) 6px 12px);
     box-shadow: inset 0 3px 0 var(--bevel-light), inset 0 -3px 0 var(--bevel-dark);
   }
   .icon-frame {
@@ -112,19 +106,8 @@
     position: relative;
     overflow: hidden;
   }
-  .icon-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 6px;
-    image-rendering: pixelated;
-  }
-  .icon-frame .fallback {
-    font-family: var(--font-title);
-    font-size: 18px;
-    color: var(--gold);
-    text-shadow: 2px 2px 0 #000;
-  }
+  .icon-frame img { width: 100%; height: 100%; object-fit: contain; padding: 6px; image-rendering: pixelated; }
+  .icon-frame .fallback { font-family: var(--font-title); font-size: 18px; color: var(--gold); text-shadow: 2px 2px 0 #000; }
 
   /* ---------- Заголовок ---------- */
   .hero { text-align: center; padding: 28px 16px 22px; }
@@ -137,21 +120,10 @@
     letter-spacing: 2px;
     line-height: 1.4;
   }
-  .hero .slogan {
-    margin-top: 14px;
-    color: var(--grass-light);
-    font-size: 22px;
-    text-shadow: 2px 2px 0 #000;
-  }
+  .hero .slogan { margin-top: 14px; color: var(--grass-light); font-size: 22px; text-shadow: 2px 2px 0 #000; }
 
   /* ---------- Навигация ---------- */
-  nav.menu {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    padding: 0 16px 26px;
-  }
+  nav.menu { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 0 16px 26px; }
   nav.menu a {
     font-family: var(--font-title);
     font-size: 11px;
@@ -165,7 +137,12 @@
   nav.menu a:active { transform: translateY(2px); }
 
   /* ---------- Секции ---------- */
-  section.block { padding: 0 22px 44px; }
+  section.block {
+    padding: 28px 22px 36px;
+    margin: 0 18px 22px;
+    background: var(--checker);
+    box-shadow: var(--pixel-frame);
+  }
   .section-title {
     font-family: var(--font-title);
     font-weight: 400;
@@ -178,13 +155,7 @@
   }
 
   /* ---------- Поиск и фильтры ---------- */
-  .tools {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 14px;
-  }
+  .tools { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: 14px; }
   .search {
     width: min(460px, 100%);
     background: #0d0d0d;
@@ -216,25 +187,15 @@
   .filter-btn.active { background: var(--grass); color: #fff; }
   .btn:active, .filter-btn:active { transform: translateY(2px); }
 
-  .count {
-    text-align: center;
-    color: var(--muted);
-    font-size: 20px;
-    margin: 16px 0 18px;
-  }
+  .count { text-align: center; color: var(--muted); font-size: 20px; margin: 16px 0 18px; }
 
   /* ---------- Каталог ---------- */
   .catalog {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 22px 20px;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 18px 16px;
   }
-  .empty {
-    grid-column: 1 / -1;
-    text-align: center;
-    color: var(--muted);
-    padding: 40px 0;
-  }
+  .empty { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 40px 0; }
 
   /* ---------- Карточка товара ---------- */
   .card {
@@ -245,52 +206,40 @@
     min-width: 0;
   }
   .card .img {
+    position: relative;
     width: 100%;
     aspect-ratio: 1 / 1;
     background:
       repeating-linear-gradient(0deg, rgba(0,0,0,.25) 0 10px, transparent 10px 20px),
       repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 10px, transparent 10px 20px),
       #3a3a3a;
-    background-size: cover;
-    background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: var(--font-title);
-    font-size: 36px;
-    color: var(--grass-light);
-    text-shadow: 3px 3px 0 #000;
     overflow: hidden;
     border-bottom: 3px solid #000;
   }
-  .card .body {
-    padding: 12px 14px 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    flex: 1;
-  }
-  .card .name {
+  .card .img .ph {
     font-family: var(--font-title);
-    font-size: 12px;
-    line-height: 1.5;
-    color: #fff;
+    font-size: 30px;
+    color: var(--grass-light);
+    text-shadow: 3px 3px 0 #000;
   }
-  .card .desc {
-    color: var(--muted);
-    font-size: 19px;
-    line-height: 1.2;
-    flex: 1;
+  .card .img img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
+    image-rendering: pixelated;
   }
-  .card .meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 6px;
-    gap: 8px;
-  }
-  .card .price { color: var(--gold); font-size: 24px; text-shadow: 2px 2px 0 #000; }
-  .card .status { color: var(--red); font-size: 18px; }
+  .card .body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 5px; flex: 1; }
+  .card .name { font-family: var(--font-title); font-size: 10px; line-height: 1.6; color: #fff; }
+  .card .desc { color: var(--muted); font-size: 18px; line-height: 1.15; flex: 1; }
+  .card .meta { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; gap: 8px; }
+  .card .price { color: var(--gold); font-size: 22px; text-shadow: 2px 2px 0 #000; }
+  .card .status { color: var(--red); font-size: 17px; }
   .card .status.in { color: var(--grass-light); }
   .card .btn { width: 100%; background: var(--grass); color: #fff; margin-top: 4px; }
   .card .btn:hover:not(:disabled) { background: var(--grass-light); }
@@ -319,12 +268,7 @@
     padding: 16px 20px;
     font-size: 21px;
   }
-  .steps li {
-    counter-increment: step;
-    position: relative;
-    padding: 8px 0 8px 40px;
-    color: #d6d6d6;
-  }
+  .steps li { counter-increment: step; position: relative; padding: 8px 0 8px 40px; color: #d6d6d6; }
   .steps li::before {
     content: counter(step);
     position: absolute;
@@ -341,18 +285,8 @@
     justify-content: center;
     box-shadow: 0 0 0 2px #000;
   }
-
-  .contact-box {
-    max-width: 420px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  .contact-box .btn {
-    background: var(--grass);
-    color: #fff;
-    font-size: 11px;
-    padding: 14px 16px;
-  }
+  .contact-box { max-width: 420px; margin: 0 auto; text-align: center; }
+  .contact-box .btn { background: var(--grass); color: #fff; font-size: 11px; padding: 14px 16px; }
   .contact-box .btn:hover { background: var(--grass-light); }
 
   footer {
@@ -423,15 +357,17 @@
     :root { --center-width: 100vw; }
     .side { display: none; }
     .shell { box-shadow: none; }
+    section.block { margin: 0 10px 18px; }
   }
   @media (max-width: 520px) {
     html, body { font-size: 20px; }
-    .catalog { grid-template-columns: 1fr; gap: 18px; }
+    .catalog { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .card .name { font-size: 9px; }
     .topbar { padding: 18px 12px 8px; gap: 10px; }
     .icon-frame { width: 52px; height: 52px; }
     .hero { padding: 22px 12px 16px; }
     nav.menu a { font-size: 9px; padding: 10px 10px; }
-    section.block { padding: 0 14px 36px; }
+    section.block { padding: 20px 12px 26px; margin: 0 6px 16px; }
     .panel, .steps { padding: 16px; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -535,18 +471,89 @@ const SITE_IMAGES = {
    ===================================================================== */
 const SELLER_NAME = "продавец";
 
+/* Цены и количество по умолчанию для каждого тира.
+   Замените на свои значения в самих товарах при необходимости. */
+const TIERS = {
+  base:  { label: "Базовые",  price: "150 ₽",   stock: 10 },
+  mid:   { label: "Средние",  price: "450 ₽",   stock: 5 },
+  rare:  { label: "Редкие",   price: "1 200 ₽", stock: 2 },
+  elite: { label: "Незерит",  price: "4 500 ₽", stock: 1 }
+};
+
 /* =====================================================================
-   ТОВАРЫ — ЗАМЕНИ НА СВОИ
-   stock: количество в наличии (0 = SOLD OUT)
-   image: URL фото или "" (будет заглушка)
+   ТОВАРЫ
+   Формат: [название, описание, тир, slug картинки]
+   Картинка ищется по пути images/products/<slug>.png
    ===================================================================== */
-const PRODUCTS = [
-  { id: 1, name: "Shadow Hoodie", category: "Одежда",     price: "4 500 ₽", stock: 3, image: "", description: "Плотный худи оверсайз, матовый чёрный." },
-  { id: 2, name: "Night Cargo",   category: "Одежда",     price: "5 200 ₽", stock: 0, image: "", description: "Карго с низкой посадкой и сдержанным силуэтом." },
-  { id: 3, name: "Ember Ring",    category: "Аксессуары", price: "2 100 ₽", stock: 5, image: "", description: "Тонкое кольцо из матовой стали." },
-  { id: 4, name: "Velvet Cap",    category: "Аксессуары", price: "1 800 ₽", stock: 2, image: "", description: "Бархатная кепка без логотипа." },
-  { id: 5, name: "Dusk Print",    category: "Арт",        price: "3 000 ₽", stock: 1, image: "", description: "Постер A3 на плотной бумаге." }
+const RAW_PRODUCTS = [
+  // Базовый тир
+  ["Незерак", "Есть повсюду, ломается мгновенно.", "base", "netherrack"],
+  ["Песок душ", "Легко копается лопатой в Долине песка душ.", "base", "soul_sand"],
+  ["Почва душ", "Легко копается лопатой в Долине песка душ.", "base", "soul_soil"],
+  ["Базальт", "Много в Базальтовых дельтах и колоннах.", "base", "basalt"],
+  ["Чернит", "Легко добывается киркой в пустошах и дельтах.", "base", "blackstone"],
+  ["Гравий", "Большими залежами у лавовых морей.", "base", "gravel"],
+  ["Магмовый блок", "Легко найти вдоль берегов лавы.", "base", "magma_block"],
+  ["Костяной блок", "Крупные скелеты в Долине песка душ.", "base", "bone_block"],
+  ["Багровый стебель", "Обычная рубка деревьев в Багровом лесу.", "base", "crimson_stem"],
+  ["Искажённый стебель", "Обычная рубка в безопасном Искажённом лесу.", "base", "warped_stem"],
+  ["Очищенный багровый стебель", "Делается в один клик топором.", "base", "stripped_crimson_stem"],
+  ["Очищенный искажённый стебель", "Делается в один клик топором.", "base", "stripped_warped_stem"],
+  ["Блок нароста Нижнего мира", "Быстро собирается мотыгой с грибков.", "base", "nether_wart_block"],
+  ["Искажённый блок нароста", "Быстро собирается мотыгой с грибков.", "base", "warped_wart_block"],
+  ["Грибосвет", "Растёт внутри грибков, ломается чем угодно.", "base", "shroomlight"],
+  ["Багровый грибок", "Собирается рукой, легко размножается.", "base", "crimson_fungus"],
+  ["Искажённый грибок", "Собирается рукой, легко размножается.", "base", "warped_fungus"],
+  ["Багровые корни", "Собираются рукой или ножницами в лесу.", "base", "crimson_roots"],
+  ["Искажённые корни", "Собираются рукой или ножницами в лесу.", "base", "warped_roots"],
+
+  // Средний тир
+  ["Незерские ростки", "Добываются только ножницами.", "mid", "nether_sprouts"],
+  ["Плакучие лианы", "Без ножниц выпадают с шансом 33%.", "mid", "weeping_vines"],
+  ["Извилистые лианы", "Без ножниц выпадают с шансом 33%.", "mid", "twisting_vines"],
+  ["Обсидиан", "Нужна алмазная или незеритовая кирка.", "mid", "obsidian"],
+  ["Плачущий обсидиан", "Нужна алмазная кирка, встречается реже.", "mid", "crying_obsidian"],
+  ["Нарост Нижнего мира", "Нужно найти Адскую крепость или бастион.", "mid", "nether_wart"],
+  ["Незерские кирпичи", "Адская крепость и бой с ифритами.", "mid", "nether_bricks"],
+  ["Потрескавшиеся незерские кирпичи", "Добываются только в Адских крепостях.", "mid", "cracked_nether_bricks"],
+  ["Резные незерские кирпичи", "Генерируются в крепостях в ограниченном количестве.", "mid", "chiseled_nether_bricks"],
+
+  // Редкий тир
+  ["Светокамень", "Без Шелкового касания рассыпается на пыль.", "rare", "glowstone"],
+  ["Багровый нилий", "Без Шелкового касания становится незераком.", "rare", "crimson_nylium"],
+  ["Искажённый нилий", "Без Шелкового касания становится незераком.", "rare", "warped_nylium"],
+  ["Полированный чернит", "Добывается только в Развалинах бастиона.", "rare", "polished_blackstone"],
+  ["Полированные чернитовые кирпичи", "Добываются только в Развалинах бастиона.", "rare", "polished_blackstone_bricks"],
+  ["Потрескавшиеся полированные чернитовые кирпичи", "Редкий декор в бастионах.", "rare", "cracked_polished_blackstone_bricks"],
+  ["Резной полированный чернит", "Редкий декор в бастионах.", "rare", "chiseled_polished_blackstone"],
+  ["Гладкий базальт", "В Аду генерируется только в бастионах.", "rare", "smooth_basalt"],
+  ["Полированный базальт", "В Аду генерируется только в бастионах.", "rare", "polished_basalt"],
+  ["Цепь", "Генерируется в бастионах над пропастями.", "rare", "chain"],
+  ["Блок золота", "Спрятан в сокровищницах бастионов.", "rare", "gold_block"],
+  ["Золочёный чернит", "Есть только в бастионах.", "rare", "gilded_blackstone"],
+  ["Фонарь душ", "Редко генерируется в бастионах.", "rare", "soul_lantern"],
+  ["Костёр душ", "Крайне редкий. Нужно Шелковое касание.", "rare", "soul_campfire"],
+  ["Сухой гаст", "Очень редкая находка у останков в Долине песка душ.", "rare", "dried_ghast"],
+
+  // Незеритовый тир
+  ["Незеритовый меч", "Максимальный урон, не сгорает в лаве.", "elite", "netherite_sword"],
+  ["Незеритовая кирка", "Самая быстрая и прочная кирка в игре.", "elite", "netherite_pickaxe"],
+  ["Незеритовый топор", "Высокий урон и мгновенная рубка дерева.", "elite", "netherite_axe"],
+  ["Незеритовая лопата", "Самая быстрая копка сыпучих блоков.", "elite", "netherite_shovel"],
+  ["Незеритовая мотыга", "Максимальная прочность для сбора листвы и наростов.", "elite", "netherite_hoe"],
+  ["Незеритовое копьё", "Актуально для версий 1.21.11+.", "elite", "netherite_spear"]
 ];
+
+/* Превращаем список в товары с ценами, остатком и путём к картинке */
+const PRODUCTS = RAW_PRODUCTS.map(([name, description, tier, slug], i) => ({
+  id: i + 1,
+  name,
+  description,
+  category: TIERS[tier].label,
+  price: TIERS[tier].price,
+  stock: TIERS[tier].stock,
+  image: `images/products/${slug}.png`
+}));
 
 /* =====================================================================
    СОСТОЯНИЕ
@@ -602,15 +609,18 @@ async function copyText(text) {
 
 /* =====================================================================
    КАРТОЧКИ ТОВАРОВ
+   Если картинки нет, остаётся буква названия
    ===================================================================== */
 function buildCard(p) {
   const inStock = p.stock > 0;
-  const imgStyle = p.image ? `style="background-image:url('${esc(p.image)}')"` : "";
-  const imgInner = p.image ? "" : esc(p.name.charAt(0));
+  const letter = esc(p.name.charAt(0));
 
   return `
     <article class="card">
-      <div class="img" ${imgStyle}>${imgInner}</div>
+      <div class="img">
+        <span class="ph">${letter}</span>
+        <img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onerror="this.remove()">
+      </div>
       <div class="body">
         <div class="name">${esc(p.name)}</div>
         <div class="desc">${esc(p.description)}</div>
@@ -646,7 +656,7 @@ function applyFilters() {
 }
 
 function renderFilters() {
-  const cats = ["Все", ...new Set(PRODUCTS.map(p => p.category))];
+  const cats = ["Все", ...Object.values(TIERS).map(t => t.label)];
   $("#filters").innerHTML = cats.map(c =>
     `<button class="filter-btn ${c === currentFilter ? "active" : ""}" data-cat="${esc(c)}">${esc(c)}</button>`
   ).join("");
